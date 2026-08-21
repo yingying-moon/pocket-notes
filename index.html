@@ -85,16 +85,35 @@
   .search .mag{position:absolute;left:16px;top:50%;transform:translateY(-50%);
     color:var(--text-3);font-size:16px;}
 
-  .tags{display:flex;align-items:center;gap:8px;overflow-x:auto;overflow-y:hidden;
-    padding:14px 2px;min-height:46px;flex-wrap:nowrap;scrollbar-width:none;
-    -webkit-overflow-scrolling:touch;}
-  .tags::-webkit-scrollbar{display:none;}
-  .tag-chip{flex:0 0 auto;border:none;background:var(--surface);color:var(--text-2);
-    padding:9px 15px;border-radius:999px;font-size:13.5px;box-shadow:var(--shadow-soft);
-    display:flex;align-items:center;gap:6px;white-space:nowrap;
-    transition:all var(--dur) var(--ease);}
-  .tag-chip:active{transform:scale(.94);}
-  .tag-chip.on{background:var(--accent);color:#fff;box-shadow:0 4px 12px rgba(168,181,160,.4);}
+  /* ---------- 侧边栏 ---------- */
+  .sidebar{position:absolute;left:0;top:0;bottom:0;width:260px;max-width:80vw;background:var(--surface);z-index:200;
+    transform:translateX(-110%);transition:transform var(--dur) var(--ease);box-shadow:4px 0 24px rgba(0,0,0,.08);
+    display:flex;flex-direction:column;padding:50px 16px 24px;-webkit-overflow-scrolling:touch;}
+  .sidebar.open{transform:none;}
+  .sb-overlay{position:absolute;inset:0;background:rgba(0,0,0,.18);z-index:199;opacity:0;pointer-events:none;transition:opacity var(--dur);}
+  .sb-overlay.open{opacity:1;pointer-events:auto;}
+  .sb-head{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding:0 4px;}
+  .sb-icon{width:42px;height:42px;border-radius:12px;background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:var(--shadow-soft);}
+  .sb-title{font-size:17px;font-weight:700;color:var(--text);}
+  .sb-sub{font-size:12px;color:var(--text-3);margin-top:2px;}
+  .sb-section-title{font-size:11px;color:var(--text-3);font-weight:600;letter-spacing:.6px;text-transform:uppercase;margin:18px 4px 8px;}
+  .sb-groups{display:flex;flex-direction:column;gap:3px;flex-shrink:0;max-height:45%;overflow-y:auto;}
+  .sb-groups::-webkit-scrollbar{display:none;}
+  .sb-group{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;cursor:pointer;transition:all var(--dur) var(--ease);color:var(--text-2);}
+  .sb-group:active{background:var(--accent-soft);}
+  .sb-group.active{background:var(--accent-soft);color:var(--text);}
+  .sb-group .sb-g-icon{font-size:18px;width:24px;text-align:center;}
+  .sb-group .sb-g-name{flex:1;font-size:15px;}
+  .sb-group .sb-g-count{margin-left:auto;font-size:12.5px;color:var(--text-3);min-width:24px;text-align:right;}
+  .sb-group.active .sb-g-count{color:var(--text-2);}
+  .sb-new-group{display:flex;align-items:center;gap:10px;width:100%;border:none;background:transparent;color:var(--text-3);padding:10px 12px;border-radius:12px;font-size:14.5px;text-align:left;transition:background var(--dur);font-family:inherit;}
+  .sb-new-group:active{background:var(--accent-soft);color:var(--text);}
+  .sb-div{height:1px;background:var(--line);margin:16px 4px;}
+  .sb-tags{display:flex;flex-wrap:wrap;gap:8px;padding:0 2px;overflow-y:auto;flex:1;min-height:0;align-content:flex-start;}
+  .sb-tags::-webkit-scrollbar{display:none;}
+  .sb-tag{border:none;background:var(--bg);color:var(--text-2);padding:7px 12px;border-radius:999px;font-size:13px;transition:all var(--dur);font-family:inherit;}
+  .sb-tag:active{background:var(--accent-soft);color:var(--text);}
+  .sb-tag.on{background:var(--accent);color:#fff;}
 
   .list-title{font-size:13px;color:var(--text-3);margin:14px 4px 6px;font-weight:600;letter-spacing:.4px;}
   .cards{display:flex;flex-direction:column;gap:12px;padding-bottom:110px;}
@@ -104,10 +123,14 @@
     animation:cardIn var(--dur) var(--ease) both;}
   .card:active{transform:scale(.985);box-shadow:0 1px 6px rgba(74,68,60,.05);}
   @keyframes cardIn{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:none;}}
-  .card-tag{position:absolute;top:16px;right:16px;font-size:12px;color:var(--accent);
+  .card-tag{position:absolute;top:16px;left:16px;font-size:12px;color:var(--accent);
     background:var(--accent-soft);padding:3px 10px;border-radius:999px;}
+  .card-star{position:absolute;top:13px;right:13px;width:30px;height:30px;border:none;border-radius:50%;
+    background:transparent;color:var(--text-3);font-size:16px;display:flex;align-items:center;justify-content:center;z-index:2;transition:all var(--dur) var(--ease);}
+  .card-star:active{transform:scale(.85);}
+  .card-star.on{color:#E8C25D;background:var(--surface-2);}
   .card-title{font-size:16.5px;font-weight:600;color:var(--text);
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:64px;}
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:40px;}
   .card-body{margin-top:5px;font-size:14px;color:var(--text-2);
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
   .card-time{margin-top:10px;font-size:12px;color:var(--text-3);}
@@ -233,15 +256,34 @@
 <body>
 <div id="app">
 
+  <!-- 侧边栏 -->
+  <aside id="sidebar" class="sidebar">
+    <div class="sb-head">
+      <div class="sb-icon">📝</div>
+      <div>
+        <div class="sb-title">Pocket Notes</div>
+        <div class="sb-sub">本地便签</div>
+      </div>
+    </div>
+    <div class="sb-section-title">分组</div>
+    <div class="sb-groups" id="sbGroups"></div>
+    <button class="sb-new-group" id="btnNewGroup">+ 新建分组</button>
+    <div class="sb-div"></div>
+    <div class="sb-section-title">标签</div>
+    <div class="sb-tags" id="sbTags"></div>
+  </aside>
+  <div id="sbOverlay" class="sb-overlay"></div>
+
   <!-- 首页 -->
   <section id="home" class="page active">
     <div class="home-top">
-      <div>
-        <div class="greet-emoji" id="greetEmoji">🌤</div>
-        <div class="greet" id="greetText">下午好</div>
-        <div class="gdate" id="greetDate">今天 · 8月20日 星期四</div>
-      </div>
+      <button class="icon-btn" id="btnMenu" aria-label="菜单">☰</button>
       <button class="icon-btn" id="btnSettings" aria-label="设置">⚙</button>
+    </div>
+    <div style="padding:0 4px;">
+      <div class="greet-emoji" id="greetEmoji">🌤</div>
+      <div class="greet" id="greetText">下午好</div>
+      <div class="gdate" id="greetDate">今天 · 8月20日 星期四</div>
     </div>
 
     <div class="search">
@@ -249,7 +291,6 @@
       <input id="searchInput" type="text" placeholder="搜索便签...">
     </div>
 
-    <div class="tags" id="tagFilter"></div>
     <div class="list-title" id="listTitle">全部便签</div>
     <div class="cards" id="cardList"></div>
 
@@ -342,7 +383,19 @@
   "use strict";
   const $ = s => document.querySelector(s);
   const KEY = "pocketnotes.v1";
+  const GROUPS_KEY = "pocketnotes.groups.v1";
   const WEEK = ["日","一","二","三","四","五","六"];
+  const DEFAULT_GROUPS=[
+    {id:"all",name:"全部",icon:"🗂",type:"all"},
+    {id:"starred",name:"收藏",icon:"⭐",type:"starred"},
+    {id:"inbox",name:"Inbox",icon:"📥",type:"inbox"},
+    {id:"work",name:"工作",icon:"💼",tag:"工作"},
+    {id:"ai",name:"AI",icon:"🤖",tag:"AI"},
+    {id:"study",name:"学习",icon:"📚",tag:"学习"},
+    {id:"idea",name:"灵感",icon:"💡",tag:"灵感"},
+    {id:"temp",name:"临时",icon:"⏱",tag:"临时"},
+    {id:"prompt",name:"AI Prompt",icon:"🪄",tag:"AI Prompt"}
+  ];
 
   /* ---------- 数据层：每个便签唯一 UUID，Insert 一次后只 Update ---------- */
   function uid(){
@@ -364,8 +417,16 @@
       createdAt:Date.now(),updatedAt:Date.now()
     };
   }
+  let groups=loadGroups();
+  function loadGroups(){
+    try{const r=localStorage.getItem(GROUPS_KEY);if(r){const a=JSON.parse(r);if(Array.isArray(a)&&a.length)return a;}}catch(e){}
+    return DEFAULT_GROUPS.map(g=>({...g}));
+  }
   function persist(){
-    try{localStorage.setItem(KEY,JSON.stringify(notes));}catch(e){console.warn("save failed",e);}
+    try{
+      localStorage.setItem(KEY,JSON.stringify(notes));
+      localStorage.setItem(GROUPS_KEY,JSON.stringify(groups));
+    }catch(e){console.warn("save failed",e);}
   }
 
   /* ---------- 顶部问候 ---------- */
@@ -386,27 +447,49 @@
   }
 
   /* ---------- 列表渲染 ---------- */
-  let curQuery="",curTag="";
+  let curQuery="",curTag="",curGroupId="all";
   function allTags(){
     const set=new Set();
     notes.forEach(n=>(n.tags||[]).forEach(t=>set.add(t)));
     return [...set];
   }
+  function currentGroup(){return groups.find(g=>g.id===curGroupId)||groups[0];}
+  function countGroup(g){
+    if(!g)return 0;
+    if(g.type==="all")return notes.length;
+    if(g.type==="starred")return notes.filter(n=>n.starred).length;
+    if(g.type==="inbox")return notes.filter(n=>!(n.tags||[]).length).length;
+    if(g.tag)return notes.filter(n=>(n.tags||[]).includes(g.tag)).length;
+    return 0;
+  }
+  function matchesGroup(n,g){
+    if(!g||g.type==="all")return true;
+    if(g.type==="starred")return !!n.starred;
+    if(g.type==="inbox")return !(n.tags||[]).length;
+    if(g.tag)return (n.tags||[]).includes(g.tag);
+    return true;
+  }
+  function renderGroups(){
+    const box=$("#sbGroups");box.innerHTML="";
+    const curG=currentGroup();
+    groups.forEach(g=>{
+      const el=document.createElement("div");
+      el.className="sb-group"+(curG.id===g.id?" active":"");
+      el.innerHTML='<span class="sb-g-icon">'+esc(g.icon||"📁")+'</span><span class="sb-g-name">'+esc(g.name)+'</span><span class="sb-g-count">'+countGroup(g)+"</span>";
+      el.onclick=()=>{curGroupId=g.id;curTag="";closeSidebar();renderGroups();renderTags();renderList();};
+      box.appendChild(el);
+    });
+  }
   function renderTags(){
-    const box=$("#tagFilter");box.innerHTML="";
+    const box=$("#sbTags");box.innerHTML="";
     const tags=allTags();
-    if(tags.length){
-      const all=document.createElement("button");
-      all.className="tag-chip"+(!curTag?" on":"");all.textContent="全部";
-      all.onclick=()=>{curTag="";renderTags();renderList();};
-      box.appendChild(all);
-      tags.forEach(t=>{
-        const c=document.createElement("button");
-        c.className="tag-chip"+(curTag===t?" on":"");c.textContent=t;
-        c.onclick=()=>{curTag=(curTag===t?"":t);renderTags();renderList();};
-        box.appendChild(c);
-      });
-    }
+    if(!tags.length){box.innerHTML='<span style="color:var(--text-3);font-size:13px;padding:4px 2px;">还没有标签</span>';return;}
+    tags.forEach(t=>{
+      const c=document.createElement("button");
+      c.className="sb-tag"+(curTag===t?" on":"");c.textContent="#"+esc(t);
+      c.onclick=()=>{curTag=(curTag===t?"":t);renderTags();renderList();};
+      box.appendChild(c);
+    });
   }
   function plainPreview(n){
     const base=(n.plain||"").replace(/\n/g," ").trim();
@@ -427,7 +510,9 @@
   function renderList(){
     const list=$("#cardList");list.innerHTML="";
     const q=curQuery.trim().toLowerCase();
+    const g=currentGroup();
     let arr=notes.filter(n=>{
+      if(!matchesGroup(n,g))return false;
       if(curTag && !(n.tags||[]).includes(curTag))return false;
       if(q){
         const hay=((n.title||"")+" "+(n.plain||"")+" "+(n.tags||[]).join(" ")).toLowerCase();
@@ -436,7 +521,8 @@
       return true;
     }).sort((a,b)=>b.updatedAt-a.updatedAt);
 
-    $("#listTitle").textContent=curTag?("标签 · "+curTag):(q?"搜索结果":(arr.length?"全部便签":""));
+    let titleText=q?"搜索结果":(curTag?("标签 · "+curTag):g.name);
+    $("#listTitle").textContent=titleText;
     if(!arr.length){
       list.innerHTML='<div class="empty">还没有便签<br>点右下角的 ＋ 写第一张吧</div>';
       return;
@@ -445,10 +531,17 @@
       const c=document.createElement("div");
       c.className="card";c.style.animationDelay=(i*0.035)+"s";
       const tag=(n.tags&&n.tags[0])?'<span class="card-tag">'+esc(n.tags[0])+'</span>':"";
+      const starClass="card-star"+(n.starred?" on":"");
       c.innerHTML=tag+
+        '<button class="'+starClass+'" aria-label="收藏">★</button>'+
         '<div class="card-title">'+esc(n.title||"无标题")+'</div>'+
         '<div class="card-body">'+esc(plainPreview(n))+'</div>'+
         '<div class="card-time">'+timeLabel(n.updatedAt)+'</div>';
+      c.querySelector(".card-star").onclick=e=>{
+        e.stopPropagation();
+        n.starred=!n.starred;n.updatedAt=Date.now();
+        persist();renderGroups();renderList();
+      };
       c.onclick=()=>openEditor(n.id);
       list.appendChild(c);
     });
@@ -475,6 +568,13 @@
     setTimeout(()=>toolbar.classList.add("show"),260);
   }
 
+  function commitEdTagInput(){
+    const inp=document.querySelector("#edTags .ed-tag-input");
+    if(!inp)return;
+    const v=inp.value.trim().replace(/,$/,"");
+    if(v&&!currentTags.includes(v)){currentTags.push(v);renderEdTags();scheduleSave();}
+    else if(!v){inp.value="";}
+  }
   function renderEdTags(){
     const box=$("#edTags");box.innerHTML="";
     currentTags.forEach((t,i)=>{
@@ -489,10 +589,10 @@
     inp.onkeydown=e=>{
       if(e.key==="Enter"||e.key===","){
         e.preventDefault();
-        const v=inp.value.trim().replace(/,$/,"");
-        if(v&&!currentTags.includes(v)){currentTags.push(v);renderEdTags();scheduleSave();}
+        commitEdTagInput();
       }
     };
+    inp.onblur=()=>commitEdTagInput();
     box.appendChild(inp);
   }
 
@@ -502,6 +602,7 @@
     saveTimer=setTimeout(saveNow,500);
   }
   function saveNow(){
+    commitEdTagInput();
     if(!currentId)return;
     const n=notes.find(x=>x.id===currentId);
     if(!n)return;
@@ -516,6 +617,7 @@
   }
 
   function goBack(){
+    commitEdTagInput();
     toolbar.classList.remove("show");
     const title=titleEl.value.trim();
     const plain=editorEl.innerText.replace(/\n/g,"").trim();
@@ -530,7 +632,7 @@
     }
     currentId=null;
     showPage("home");
-    renderGreet();renderTags();renderList();
+    renderGreet();renderGroups();renderTags();renderList();
   }
 
   function deleteCurrent(){
@@ -539,7 +641,7 @@
     notes=notes.filter(x=>x.id!==currentId);
     persist();currentId=null;
     toolbar.classList.remove("show");
-    showPage("home");renderGreet();renderTags();renderList();
+    showPage("home");renderGreet();renderGroups();renderTags();renderList();
   }
 
   /* ---------- 富文本工具栏（WYSIWYG，无 Markdown 源码） ---------- */
@@ -673,6 +775,18 @@
   $("#btnSettings").onclick=()=>showPage("settings");
   $("#searchInput").oninput=e=>{curQuery=e.target.value;renderList();};
 
+  // 侧边栏
+  function openSidebar(){$("#sidebar").classList.add("open");$("#sbOverlay").classList.add("open");}
+  function closeSidebar(){$("#sidebar").classList.remove("open");$("#sbOverlay").classList.remove("open");}
+  $("#btnMenu").onclick=openSidebar;
+  $("#sbOverlay").onclick=closeSidebar;
+  $("#btnNewGroup").onclick=()=>{
+    const name=prompt("新建分组名称：");if(!name)return;
+    const icon=prompt("选一个图标（可选，默认 📁）：","📁")||"📁";
+    groups.push({id:"g_"+uid(),name:name.trim(),icon:icon.trim(),tag:name.trim()});
+    persist();renderGroups();
+  };
+
   // 设置：主题
   const themeSwitch=$("#themeSwitch");
   function applyTheme(t){
@@ -753,7 +867,7 @@
         const data=JSON.parse(r.result);
         if(!Array.isArray(data))throw new Error("格式错误");
         if(confirm("导入会覆盖当前所有便签，确定继续？")){
-          notes=data;origPersist();renderTags();renderList();
+          notes=data;persist();renderGroups();renderTags();renderList();
           alert("导入成功，共 "+notes.length+" 张便签");
         }
       }catch(err){alert("导入失败："+err.message);}
@@ -770,7 +884,7 @@
   $("#setBack").onclick=()=>showPage("home");
 
   // 初始
-  renderGreet();renderTags();renderList();
+  renderGreet();renderGroups();renderTags();renderList();
   window.addEventListener("beforeunload",()=>{if(currentId)saveNow();});
 })();
 </script>
