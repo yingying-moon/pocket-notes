@@ -123,17 +123,17 @@
     animation:cardIn var(--dur) var(--ease) both;}
   .card:active{transform:scale(.985);box-shadow:0 1px 6px rgba(74,68,60,.05);}
   @keyframes cardIn{from{opacity:0;transform:translateY(10px) scale(.98);}to{opacity:1;transform:none;}}
-  .card-tag{position:absolute;top:16px;left:16px;font-size:12px;color:var(--accent);
-    background:var(--accent-soft);padding:3px 10px;border-radius:999px;}
+  .card-tag{position:absolute;bottom:16px;right:16px;font-size:12px;color:var(--accent);
+    background:var(--accent-soft);padding:4px 10px;border-radius:999px;}
   .card-star{position:absolute;top:13px;right:13px;width:30px;height:30px;border:none;border-radius:50%;
     background:transparent;color:var(--text-3);font-size:16px;display:flex;align-items:center;justify-content:center;z-index:2;transition:all var(--dur) var(--ease);}
   .card-star:active{transform:scale(.85);}
   .card-star.on{color:#E8C25D;background:var(--surface-2);}
   .card-title{font-size:16.5px;font-weight:600;color:var(--text);
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:40px;}
-  .card-body{margin-top:5px;font-size:14px;color:var(--text-2);
+  .card-body{margin-top:5px;margin-bottom:6px;font-size:14px;color:var(--text-2);
     display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
-  .card-time{margin-top:10px;font-size:12px;color:var(--text-3);}
+  .card-time{margin-top:6px;font-size:12px;color:var(--text-3);padding-right:80px;}
   .empty{text-align:center;color:var(--text-3);padding:80px 20px;font-size:15px;line-height:1.8;}
 
   .fab{position:absolute;right:20px;bottom:30px;width:58px;height:58px;border:none;border-radius:50%;
